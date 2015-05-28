@@ -39,9 +39,14 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xWQ-1y-rDS">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <items>
-                                    <barButtonItem title="Pick" id="Lh5-J7-CJT">
+                                    <barButtonItem title="Album" id="Lh5-J7-CJT">
                                         <connections>
                                             <action selector="pickAnImage:" destination="vXZ-lx-hvc" id="r7i-97-pme"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Camera" id="6FQ-BT-8na">
+                                        <connections>
+                                            <action selector="pickAnImageFromCamera:" destination="vXZ-lx-hvc" id="WWd-5j-mgN"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
@@ -83,6 +88,7 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="cameraButton" destination="6FQ-BT-8na" id="78V-ck-L4Y"/>
                         <outlet property="imagePickerView" destination="2Zd-qo-glo" id="UJT-pL-pTZ"/>
                     </connections>
                 </viewController>
