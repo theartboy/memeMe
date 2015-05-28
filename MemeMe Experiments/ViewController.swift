@@ -8,18 +8,34 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
+class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    var pickerController: UIImagePickerController?
+    
+    @IBOutlet weak var imagePickerView: UIImageView!
+    var imagePicker:UIImagePickerController!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        imagePicker = UIImagePickerController()
+
+        imagePicker.delegate = self
+        
         // Do any additional setup after loading the view, typically from a nib.
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    
+    }
+    
+    @IBAction func pickAnImage(sender: AnyObject) {
+//        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        self.presentViewController(imagePicker, animated: true, completion: nil)
 
-
+    }
+    
 }
 

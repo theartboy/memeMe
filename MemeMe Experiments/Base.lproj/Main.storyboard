@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -18,23 +19,72 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2Zd-qo-glo">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="75" y="65" width="250" height="300"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="gE4-2x-vZv"/>
+                                    <constraint firstAttribute="width" constant="250" id="roP-wZ-sXb"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="gE4-2x-vZv"/>
+                                        <exclude reference="roP-wZ-sXb"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="gE4-2x-vZv"/>
+                                        <include reference="roP-wZ-sXb"/>
+                                    </mask>
                                 </variation>
                             </imageView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xWQ-1y-rDS">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <items>
+                                    <barButtonItem title="Pick" id="Lh5-J7-CJT">
+                                        <connections>
+                                            <action selector="pickAnImage:" destination="vXZ-lx-hvc" id="r7i-97-pme"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="xWQ-1y-rDS" firstAttribute="top" secondItem="2Zd-qo-glo" secondAttribute="bottom" constant="191" id="X4t-Se-K9n"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="xWQ-1y-rDS" secondAttribute="trailing" constant="-16" id="p9h-dA-RWq"/>
+                            <constraint firstAttribute="centerX" secondItem="2Zd-qo-glo" secondAttribute="centerX" id="qQk-JT-dCT"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="xWQ-1y-rDS" secondAttribute="bottom" id="ts4-Vw-KjA"/>
+                            <constraint firstItem="xWQ-1y-rDS" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="xba-5D-R2v"/>
+                        </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="2Zd-qo-glo"/>
+                                <exclude reference="xWQ-1y-rDS"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="qQk-JT-dCT"/>
+                                <exclude reference="X4t-Se-K9n"/>
+                                <exclude reference="p9h-dA-RWq"/>
+                                <exclude reference="xba-5D-R2v"/>
+                                <exclude reference="ts4-Vw-KjA"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
                                 <include reference="2Zd-qo-glo"/>
+                                <include reference="xWQ-1y-rDS"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="qQk-JT-dCT"/>
+                                <include reference="X4t-Se-K9n"/>
+                                <include reference="p9h-dA-RWq"/>
+                                <include reference="xba-5D-R2v"/>
+                                <include reference="ts4-Vw-KjA"/>
                             </mask>
                         </variation>
                     </view>
+                    <connections>
+                        <outlet property="imagePickerView" destination="2Zd-qo-glo" id="UJT-pL-pTZ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
