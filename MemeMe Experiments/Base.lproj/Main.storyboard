@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2Zd-qo-glo">
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2Zd-qo-glo">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="300" id="gE4-2x-vZv"/>
@@ -49,9 +49,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="xWQ-1y-rDS" firstAttribute="top" secondItem="2Zd-qo-glo" secondAttribute="bottom" constant="191" id="X4t-Se-K9n"/>
                             <constraint firstAttribute="trailingMargin" secondItem="xWQ-1y-rDS" secondAttribute="trailing" constant="-16" id="p9h-dA-RWq"/>
                             <constraint firstAttribute="centerX" secondItem="2Zd-qo-glo" secondAttribute="centerX" id="qQk-JT-dCT"/>
+                            <constraint firstAttribute="centerY" secondItem="2Zd-qo-glo" secondAttribute="centerY" constant="85" id="rnM-b4-ZZM"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="xWQ-1y-rDS" secondAttribute="bottom" id="ts4-Vw-KjA"/>
                             <constraint firstItem="xWQ-1y-rDS" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="xba-5D-R2v"/>
                         </constraints>
@@ -62,7 +62,7 @@
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="qQk-JT-dCT"/>
-                                <exclude reference="X4t-Se-K9n"/>
+                                <exclude reference="rnM-b4-ZZM"/>
                                 <exclude reference="p9h-dA-RWq"/>
                                 <exclude reference="xba-5D-R2v"/>
                                 <exclude reference="ts4-Vw-KjA"/>
@@ -75,7 +75,7 @@
                             </mask>
                             <mask key="constraints">
                                 <include reference="qQk-JT-dCT"/>
-                                <include reference="X4t-Se-K9n"/>
+                                <include reference="rnM-b4-ZZM"/>
                                 <include reference="p9h-dA-RWq"/>
                                 <include reference="xba-5D-R2v"/>
                                 <include reference="ts4-Vw-KjA"/>

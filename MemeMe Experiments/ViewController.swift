@@ -12,17 +12,22 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     var pickerController: UIImagePickerController?
     
     @IBOutlet weak var imagePickerView: UIImageView!
-    var imagePicker:UIImagePickerController!
+//    var imagePicker:UIImagePickerController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        imagePicker = UIImagePickerController()
-
-        imagePicker.delegate = self
-        
-        // Do any additional setup after loading the view, typically from a nib.
+//        imagePicker = UIImagePickerController()
+//        imagePicker.delegate = self
     }
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            imagePickerView.image = image
+            imagePickerView.contentMode = .ScaleAspectFill
+        }
+
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
@@ -31,10 +36,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     @IBAction func pickAnImage(sender: AnyObject) {
-//        let imagePicker = UIImagePickerController()
+        let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
+        
         self.presentViewController(imagePicker, animated: true, completion: nil)
-
     }
     
 }
