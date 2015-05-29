@@ -8,20 +8,41 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    var pickerController: UIImagePickerController?
+class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
+//    var pickerController: UIImagePickerController?
+    
+    @IBOutlet weak var bottomText: UITextField!
+    @IBOutlet weak var topText: UITextField!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
     @IBOutlet weak var imagePickerView: UIImageView!
 //    var imagePicker:UIImagePickerController!
+    let memeTextDelegate = MemeTextDelegate()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 //        imagePicker = UIImagePickerController()
 //        imagePicker.delegate = self
+        topText.delegate = memeTextDelegate
+        bottomText.delegate = memeTextDelegate
+        let memeTextAttributes = [
+            NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
+            NSStrokeColorAttributeName : UIColor.blackColor(),
+            NSForegroundColorAttributeName : UIColor.whiteColor(),
+//            NSBackgroundColorAttributeName : UIColor.redColor(),
+//            NSTextEffectAttributeName : NSTextEffectLetterpressStyle,
+            NSStrokeWidthAttributeName : -3.0
+        ]
+        topText.defaultTextAttributes = memeTextAttributes
+        bottomText.defaultTextAttributes = memeTextAttributes
+        topText.textAlignment = NSTextAlignment.Center
+        bottomText.textAlignment = NSTextAlignment.Center
+
     }
     override func viewWillAppear(animated: Bool) {
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
+        topText.text = "TOP"
+        bottomText.text = "BOTTOM"
     }
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
         let imagePicker = UIImagePickerController()

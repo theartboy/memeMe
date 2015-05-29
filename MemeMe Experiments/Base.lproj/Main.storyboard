@@ -51,23 +51,71 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UWq-8D-N27">
+                                <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="368" id="9bg-kJ-Ziq"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="9bg-kJ-Ziq"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="16" y="316" width="368" height="30"/>
+                                    <mask key="constraints">
+                                        <include reference="9bg-kJ-Ziq"/>
+                                    </mask>
+                                </variation>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qDm-y0-R7A">
+                                <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="368" id="hOS-jX-h6w"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="hOS-jX-h6w"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="16" y="92" width="368" height="30"/>
+                                    <mask key="constraints">
+                                        <include reference="hOS-jX-h6w"/>
+                                    </mask>
+                                </variation>
+                            </textField>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="centerX" secondItem="qDm-y0-R7A" secondAttribute="centerX" constant="-0.5" id="38X-ES-ab0"/>
+                            <constraint firstItem="2Zd-qo-glo" firstAttribute="top" secondItem="qDm-y0-R7A" secondAttribute="bottom" constant="-57" id="5GC-P1-Lud"/>
+                            <constraint firstItem="UWq-8D-N27" firstAttribute="top" secondItem="2Zd-qo-glo" secondAttribute="bottom" constant="-49" id="Ybl-3y-4FI"/>
                             <constraint firstAttribute="trailingMargin" secondItem="xWQ-1y-rDS" secondAttribute="trailing" constant="-16" id="p9h-dA-RWq"/>
                             <constraint firstAttribute="centerX" secondItem="2Zd-qo-glo" secondAttribute="centerX" id="qQk-JT-dCT"/>
                             <constraint firstAttribute="centerY" secondItem="2Zd-qo-glo" secondAttribute="centerY" constant="85" id="rnM-b4-ZZM"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="xWQ-1y-rDS" secondAttribute="bottom" id="ts4-Vw-KjA"/>
                             <constraint firstItem="xWQ-1y-rDS" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="xba-5D-R2v"/>
+                            <constraint firstAttribute="centerX" secondItem="UWq-8D-N27" secondAttribute="centerX" constant="-0.5" id="zZk-et-UqD"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="2Zd-qo-glo"/>
                                 <exclude reference="xWQ-1y-rDS"/>
+                                <exclude reference="UWq-8D-N27"/>
+                                <exclude reference="qDm-y0-R7A"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="5GC-P1-Lud"/>
                                 <exclude reference="qQk-JT-dCT"/>
                                 <exclude reference="rnM-b4-ZZM"/>
+                                <exclude reference="38X-ES-ab0"/>
+                                <exclude reference="Ybl-3y-4FI"/>
+                                <exclude reference="zZk-et-UqD"/>
                                 <exclude reference="p9h-dA-RWq"/>
                                 <exclude reference="xba-5D-R2v"/>
                                 <exclude reference="ts4-Vw-KjA"/>
@@ -77,10 +125,16 @@
                             <mask key="subviews">
                                 <include reference="2Zd-qo-glo"/>
                                 <include reference="xWQ-1y-rDS"/>
+                                <include reference="UWq-8D-N27"/>
+                                <include reference="qDm-y0-R7A"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="5GC-P1-Lud"/>
                                 <include reference="qQk-JT-dCT"/>
                                 <include reference="rnM-b4-ZZM"/>
+                                <include reference="38X-ES-ab0"/>
+                                <include reference="Ybl-3y-4FI"/>
+                                <include reference="zZk-et-UqD"/>
                                 <include reference="p9h-dA-RWq"/>
                                 <include reference="xba-5D-R2v"/>
                                 <include reference="ts4-Vw-KjA"/>
@@ -88,8 +142,10 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="bottomText" destination="UWq-8D-N27" id="jSP-IP-vg5"/>
                         <outlet property="cameraButton" destination="6FQ-BT-8na" id="78V-ck-L4Y"/>
                         <outlet property="imagePickerView" destination="2Zd-qo-glo" id="UJT-pL-pTZ"/>
+                        <outlet property="topText" destination="qDm-y0-R7A" id="0CA-RP-HEd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
