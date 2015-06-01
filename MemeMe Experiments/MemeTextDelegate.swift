@@ -48,10 +48,17 @@ class MemeTextDelegate: NSObject, UITextFieldDelegate{
         }
     }
     
+//    func textFieldDidEndEditing(textField: UITextField) {
+//        if textField.text == "" {
+//            textField.placeholder = "ENTER TEXT"
+//        }
+//    }
+    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         
         return true;
     }
+    
     
 }
