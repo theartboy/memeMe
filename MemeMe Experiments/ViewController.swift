@@ -141,7 +141,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let object = UIApplication.sharedApplication().delegate
         let appDelegate = object as! AppDelegate
         appDelegate.memes.append(meme)
-        print(appDelegate.memes.count)
+//        print(appDelegate.memes.count)
         
         let activityController = UIActivityViewController(activityItems: [meme.memedImage], applicationActivities: nil)
         self.presentViewController(activityController, animated: true, completion: nil)

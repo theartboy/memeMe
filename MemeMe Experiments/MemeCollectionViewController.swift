@@ -34,7 +34,11 @@ class MemeCollectionViewController: UIViewController,UICollectionViewDataSource 
         }else{
             self.navigationItem.leftBarButtonItem?.enabled = true
         }
-}
+    }
+    override func viewDidAppear(animated: Bool) {
+        self.collectionView?.reloadData()
+
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -91,6 +95,8 @@ class MemeCollectionViewController: UIViewController,UICollectionViewDataSource 
         
         let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("MemeDetailViewController")! as! MemeDetailViewController
         detailController.meme   = self.memes[indexPath.row]
+        detailController.currentIndex = indexPath.row
+        
         
         self.navigationController!.pushViewController(detailController, animated: true)
         

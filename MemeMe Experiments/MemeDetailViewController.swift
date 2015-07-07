@@ -12,13 +12,21 @@ class MemeDetailViewController: UIViewController {
 //    var memes: [Meme]!
     var meme: Meme!
     @IBOutlet weak var memeImage: UIImageView!
+    var editButton = UIBarButtonItem()
+    var deleteButton = UIBarButtonItem()
+    var currentIndex:Int!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        memeImage.contentMode = .ScaleAspectFill
+        //memeImage.contentMode = .ScaleAspectFill
 
         // Do any additional setup after loading the view.
         self.memeImage.image = meme.memedImage
+        deleteButton = UIBarButtonItem(title: "Delete", style: .Done, target: self, action: "delete")
+//        self.navigationItem.rightBarButtonItem = deleteButton
+        editButton = UIBarButtonItem(title: "Edit", style: .Done, target: self, action: "edit")
+        self.navigationItem.rightBarButtonItems = [editButton,deleteButton]
     }
 
     override func didReceiveMemoryWarning() {
@@ -26,16 +34,27 @@ class MemeDetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    
+    func delete(){
+        //delete the current meme
+        let object = UIApplication.sharedApplication().delegate
+        let appDelegate = object as! AppDelegate
+        appDelegate.memes.removeAtIndex(currentIndex)
+        
+        //go back to the sent memes scene
+        self.navigationController?.popViewControllerAnimated(true)
+        
+        
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
     }
-    */
+    func edit(){
+        //edit the current meme
+        let object = UIApplication.sharedApplication().delegate
+        let appDelegate = object as! AppDelegate
+//        appDelegate.memes.removeLast()
+        
+        //go back to the sent memes scene
+        self.navigationController?.popViewControllerAnimated(true)
+        
+    }
 
 }
