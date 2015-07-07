@@ -58,14 +58,10 @@ class MemeTableViewController: UITableViewController, UITableViewDataSource, UIT
         memes = applicationDelegate.memes
     }
     
-    // Get ahold of some villains, for the table
-    // This is an array of Villain instances
-//    let allVillains = Villain.allVillains
     
     // MARK: Table View Data Source
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return self.memes.count
         return memes.count
     }
     

@@ -32,8 +32,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        albumButton = UIBarButtonItem(title: "Album", style: .Done, target: self, action: "pickAnImageFromAlbum:")
-        cameraButton = UIBarButtonItem(barButtonSystemItem: .Camera, target: self, action: "pickAnImageFromCamera:")
+        albumButton = UIBarButtonItem(title: "Album", style: .Done, target: self, action: "pickAnImageFromAlbum")
+        cameraButton = UIBarButtonItem(barButtonSystemItem: .Camera, target: self, action: "pickAnImageFromCamera")
         saveButton = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "shareMeme")
         cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancelMeme")
         flexiblespace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
@@ -55,6 +55,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+
+//        self.navigationController?.navigationBarHidden(false, animated: false)
         self.navigationController?.setToolbarHidden(false, animated: false)
         
         self.navigationItem.hidesBackButton = true
@@ -75,25 +78,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         super.viewWillDisappear(animated)
     }
     
-    //After the enter is pressed at we dismiss the keyboard
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        if textField.isEqual(bottomText){
-            self.unsubscribeFromKeyboardNotifications()
-        }
-        return true
-    }
-    
-    //At the begining of Editing if the default text is written We reset it
-    func textFieldDidBeginEditing(textField: UITextField) {
-        
-        if textField.text == "TOP" || textField.text == "BOTTOM"{
-            textField.text = ""
-        }
-        if textField.isEqual(bottomText){
-            self.subscribeToKeyboardNotifications()
-        }
-    }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
         let imagePicker = UIImagePickerController()
@@ -111,40 +95,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         self.dismissViewControllerAnimated(true, completion: nil)
     
     }
-    //MARK:- KEYBOARD RELATED
-    func subscribeToKeyboardNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:"    , name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:"    , name: UIKeyboardWillHideNotification, object: nil)
-    }
     
-    func unsubscribeFromKeyboardNotifications() {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name:UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name:UIKeyboardWillHideNotification, object: nil)
-    }
-    
-    func getKeyboardHeight(notification: NSNotification) -> CGFloat {
-        let userInfo = notification.userInfo
-        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
-        return keyboardSize.CGRectValue().height
-    }
-    
-    func keyboardWillShow(notification: NSNotification) {
-//        if(keyboardHidden ){
-//            //If the keyboard was not hidden.(e.g. we change the type of the keyboard on currently displayed keyboard view) there's no need to change the origin.
-            self.view.frame.origin.y -= getKeyboardHeight(notification)
-//            keyboardHidden = false
-//        }
-    }
-    
-    func keyboardWillHide(notification: NSNotification) {
-//        if(!keyboardHidden){
-//            //If the keyboard was hidden.(e.g. we change the type of the keyboard on currently displayed keyboard view) there's no need to change the origin.
-            self.view.frame.origin.y += getKeyboardHeight(notification)
-//            keyboardHidden = true
-//        }
-    }
-    
-    @IBAction func pickAnImageFromCamera(sender: AnyObject) {
+    //@IBAction func pickAnImageFromCamera(sender: AnyObject) {
+    func pickAnImageFromCamera() {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         
@@ -154,7 +107,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
     }
     
-   @IBAction func pickAnImageFromAlbum(sender: AnyObject) {
+//    @IBAction func pickAnImageFromAlbum(sender: AnyObject) {
+    func pickAnImageFromAlbum() {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         
@@ -237,5 +191,59 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         return memedImage
     }
+    
+    //MARK:- KEYBOARD ITEMS
+    //After the enter is pressed at we dismiss the keyboard
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        if textField.isEqual(bottomText){
+            self.unsubscribeFromKeyboardNotifications()
+        }
+        return true
+    }
+    
+    //At the begining of Editing if the default text is written We reset it
+    func textFieldDidBeginEditing(textField: UITextField) {
+        
+        if textField.text == "TOP" || textField.text == "BOTTOM"{
+            textField.text = ""
+        }
+        if textField.isEqual(bottomText){
+            self.subscribeToKeyboardNotifications()
+        }
+    }
+    
+    func subscribeToKeyboardNotifications() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:"    , name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:"    , name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    func unsubscribeFromKeyboardNotifications() {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name:UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name:UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    func getKeyboardHeight(notification: NSNotification) -> CGFloat {
+        let userInfo = notification.userInfo
+        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
+        return keyboardSize.CGRectValue().height
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        //        if(keyboardHidden ){
+        //            //If the keyboard was not hidden.(e.g. we change the type of the keyboard on currently displayed keyboard view) there's no need to change the origin.
+        self.view.frame.origin.y -= getKeyboardHeight(notification)
+        //            keyboardHidden = false
+        //        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        //        if(!keyboardHidden){
+        //            //If the keyboard was hidden.(e.g. we change the type of the keyboard on currently displayed keyboard view) there's no need to change the origin.
+        self.view.frame.origin.y += getKeyboardHeight(notification)
+        //            keyboardHidden = true
+        //        }
+    }
+
 }
 
