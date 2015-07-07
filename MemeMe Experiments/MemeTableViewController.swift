@@ -18,19 +18,28 @@ class MemeTableViewController: UITableViewController, UITableViewDataSource, UIT
         super.viewDidLoad()
         
 //        plusButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "anotherMeme")
-        newButton = UIBarButtonItem(title: "New", style: .Done, target: self, action: "anotherMeme")
+        newButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "anotherMeme")
         editButton = UIBarButtonItem(title: "Edit", style: .Done, target: self, action: "edit")
         
         self.navigationItem.hidesBackButton = true
         self.navigationItem.rightBarButtonItem = newButton
         self.navigationItem.leftBarButtonItem = editButton
-    
+        
+        let object = UIApplication.sharedApplication().delegate
+        let appDelegate = object as! AppDelegate
+        if (appDelegate.memes.count == 0) {
+            self.navigationItem.leftBarButtonItem?.enabled = false
+        }else{
+            self.navigationItem.leftBarButtonItem?.enabled = true
+        }
+
     }
     func anotherMeme(){
-        let editorVC = self.storyboard!.instantiateViewControllerWithIdentifier("MemeEditorViewController")! as! ViewController
+//        let editorVC = self.storyboard!.instantiateViewControllerWithIdentifier("MemeEditorViewController")! as! ViewController
 //        editorVC.imagePickerView.image? = UIImage()
         self.dismissViewControllerAnimated(true, completion: nil)
-        //self.performSegueWithIdentifier("anotherMeme", sender: self)
+        self.performSegueWithIdentifier("newMeme", sender: self)
+//        self.navigationController!.pushViewController(editorVC, animated: true)
         
     }
     func edit(){
@@ -66,7 +75,7 @@ class MemeTableViewController: UITableViewController, UITableViewDataSource, UIT
         let meme = self.memes[indexPath.row]
         
         // Set the name and image
-        cell.textLabel?.text = meme.topText
+        cell.textLabel?.text = meme.topText+" - "+meme.bottomText
         cell.imageView?.image = meme.memedImage //UIImage(named: meme.image)
         
         // If the cell has a detail label, we will put the evil scheme in.

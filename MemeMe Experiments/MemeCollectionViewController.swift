@@ -8,22 +8,32 @@
 
 import UIKit
 
-class MemeCollectionViewController: UIViewController {
+class MemeCollectionViewController: UIViewController,UICollectionViewDataSource {
 
     var memes: [Meme]!
     
     var newButton = UIBarButtonItem()
     var editButton = UIBarButtonItem()
+    @IBOutlet weak var collectionView: UICollectionView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        newButton = UIBarButtonItem(title: "New", style: .Done, target: self, action: "anotherMeme")
+        newButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "anotherMeme")
         editButton = UIBarButtonItem(title: "Edit", style: .Done, target: self, action: "edit")
         
         self.navigationItem.hidesBackButton = true
         self.navigationItem.rightBarButtonItem = newButton
         self.navigationItem.leftBarButtonItem = editButton
+        
+        let object = UIApplication.sharedApplication().delegate
+        let appDelegate = object as! AppDelegate
+        if (appDelegate.memes.count == 0) {
+            self.navigationItem.leftBarButtonItem?.enabled = false
+        }else{
+            self.navigationItem.leftBarButtonItem?.enabled = true
+        }
 }
 
     override func didReceiveMemoryWarning() {
@@ -32,14 +42,24 @@ class MemeCollectionViewController: UIViewController {
     }
     
     func anotherMeme(){
-        let editorVC = self.storyboard!.instantiateViewControllerWithIdentifier("MemeEditorViewController")! as! ViewController
-        //        editorVC.imagePickerView.image? = UIImage()
         self.dismissViewControllerAnimated(true, completion: nil)
-        //self.performSegueWithIdentifier("anotherMeme", sender: self)
+//        let editorVC = self.storyboard!.instantiateViewControllerWithIdentifier("MemeEditorViewController")! as! ViewController
+        //        editorVC.imagePickerView.image? = UIImage()
+        self.performSegueWithIdentifier("newMeme", sender: self)
+//        self.navigationController!.pushViewController(editorVC, animated: true)
+//        var storyboard = UIStoryboard (name: "Main", bundle: nil)
+//        var editorVC = storyboard.instantiateViewControllerWithIdentifier("MemeEditorViewController")as! UIViewController
+        
+        //sanitize the image and save button so when returning for a new meme they are ready for business
+//        self.imagePickerView.image = UIImage()
+//        self.saveButton.enabled = false
+        
+//        self.navigationController?.presentViewController(editorVC, animated: true, completion:nil)
         
     }
     func edit(){
         self.editing = !self.editing
+        self.collectionView?.reloadData()
     }
 
     
@@ -51,11 +71,11 @@ class MemeCollectionViewController: UIViewController {
     }
     //////////////bond villians collection view
     
-     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+      func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return memes.count
     }
     
-     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+      func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("MemeCollectionViewCell", forIndexPath: indexPath) as! MemeCollectionViewCell
         let meme = self.memes[indexPath.row]
@@ -67,8 +87,7 @@ class MemeCollectionViewController: UIViewController {
         return cell
     }
     
-     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath:NSIndexPath)
-    {
+      func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath:NSIndexPath){
         
         let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("MemeDetailViewController")! as! MemeDetailViewController
         detailController.meme   = self.memes[indexPath.row]
@@ -77,36 +96,4 @@ class MemeCollectionViewController: UIViewController {
         
     }
     
-//    /////////////table view
-//    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        //        return self.memes.count
-//        return memes.count
-//    }
-//    
-//    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-//        
-//        let cell = tableView.dequeueReusableCellWithIdentifier("MemeCell") as! UITableViewCell
-//        let meme = self.memes[indexPath.row]
-//        
-//        // Set the name and image
-//        cell.textLabel?.text = meme.topText
-//        cell.imageView?.image = meme.memedImage //UIImage(named: meme.image)
-//        
-//        // If the cell has a detail label, we will put the evil scheme in.
-//        //        if let detailTextLabel = cell.detailTextLabel {
-//        //            detailTextLabel.text = "Scheme: \(villain.evilScheme)"
-//        //        }
-//        
-//        return cell
-//    }
-//    
-//    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        //
-//        let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("MemeDetailViewController")! as! MemeDetailViewController
-//        detailController.meme   = self.memes[indexPath.row]
-//        
-//        self.navigationController!.pushViewController(detailController, animated: true)
-//    }
-
-
 }

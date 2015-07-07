@@ -14,9 +14,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     @IBOutlet weak var bottomText: UITextField!
     @IBOutlet weak var topText: UITextField!
-    @IBOutlet weak var cameraButton: UIBarButtonItem!
-    @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var imagePickerView: UIImageView!
+    
+    var cameraButton: UIBarButtonItem!
+    var saveButton: UIBarButtonItem!
+    var albumButton: UIBarButtonItem!
+    var cancelButton: UIBarButtonItem!
+    var flexiblespace = UIBarButtonItem()
+    
 
 //    let memeTextDelegate = MemeTextDelegate()
     var topHasBeenEdited = false
@@ -26,6 +31,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        albumButton = UIBarButtonItem(title: "Album", style: .Done, target: self, action: "pickAnImageFromAlbum:")
+        cameraButton = UIBarButtonItem(barButtonSystemItem: .Camera, target: self, action: "pickAnImageFromCamera:")
+        saveButton = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "shareMeme")
+        cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancelMeme")
+        flexiblespace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
+        
         topText.delegate = self
         bottomText.delegate = self
         let memeTextAttributes = [
@@ -43,7 +55,16 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-
+        self.navigationController?.setToolbarHidden(false, animated: false)
+        
+        self.navigationItem.hidesBackButton = true
+        
+        self.navigationItem.leftBarButtonItem = saveButton
+        self.navigationItem.rightBarButtonItem = cancelButton
+//        self.toolbarItems = [cameraButton, albumButton]
+//        self.setToolbarItems([cameraButton,albumButton], animated: true)
+        self.toolbarItems = [flexiblespace,cameraButton,flexiblespace,albumButton,flexiblespace]
+        
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
         topText.text = "TOP"
         bottomText.text = "BOTTOM"
@@ -132,7 +153,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         self.presentViewController(imagePicker, animated: true, completion: nil)
         
     }
-    @IBAction func pickAnImage(sender: AnyObject) {
+    
+   @IBAction func pickAnImageFromAlbum(sender: AnyObject) {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         
@@ -141,12 +163,21 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         self.presentViewController(imagePicker, animated: true, completion: nil)
     }
 
-    
-    @IBAction func saveFromButton(sender: AnyObject) {
-        share()
+    func cancelMeme(){
+        var storyboard = UIStoryboard (name: "Main", bundle: nil)
+        var sentMemeController = storyboard.instantiateViewControllerWithIdentifier("TabBarController")as! UITabBarController
+        
+        //sanitize the image and save button so when returning for a new meme they are ready for business
+        self.imagePickerView.image = UIImage()
+        self.saveButton.enabled = false
+        self.dismissViewControllerAnimated(true, completion: nil)
+        
+        self.navigationController?.presentViewController(sentMemeController, animated: true, completion:nil)
+        
     }
     
-    func share (){
+    
+    func shareMeme (){
         var meme = Meme(
             topText: topText.text!,
             bottomText: bottomText.text!,
@@ -174,13 +205,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             }
 
             var storyboard = UIStoryboard (name: "Main", bundle: nil)
-            var sentController = storyboard.instantiateViewControllerWithIdentifier("TabBarController")as! UITabBarController
+            var sentMemeController = storyboard.instantiateViewControllerWithIdentifier("TabBarController")as! UITabBarController
             
             //sanitize the image and save button so when returning for a new meme they are ready for business
             self.imagePickerView.image = UIImage()
             self.saveButton.enabled = false
-            
-            self.navigationController?.presentViewController(sentController, animated: true, completion:nil)
+            self.dismissViewControllerAnimated(true, completion: nil)
+          
+            self.navigationController?.presentViewController(sentMemeController, animated: true, completion:nil)
 
         }
         
