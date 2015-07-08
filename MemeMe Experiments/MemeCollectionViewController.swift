@@ -13,7 +13,7 @@ class MemeCollectionViewController: UIViewController,UICollectionViewDataSource 
     var memes: [Meme]!
     
     var newButton = UIBarButtonItem()
-    var editButton = UIBarButtonItem()
+//    var editButton = UIBarButtonItem()
     @IBOutlet weak var collectionView: UICollectionView!
     
     
@@ -21,19 +21,21 @@ class MemeCollectionViewController: UIViewController,UICollectionViewDataSource 
         super.viewDidLoad()
 
         newButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "anotherMeme")
-        editButton = UIBarButtonItem(title: "Edit", style: .Done, target: self, action: "edit")
+//        editButton = UIBarButtonItem(title: "Edit", style: .Done, target: self, action: "edit")
         
         self.navigationItem.hidesBackButton = true
         self.navigationItem.rightBarButtonItem = newButton
-        self.navigationItem.leftBarButtonItem = editButton
+//        self.navigationItem.leftBarButtonItem = editButton
         
-        let object = UIApplication.sharedApplication().delegate
-        let appDelegate = object as! AppDelegate
-        if (appDelegate.memes.count == 0) {
-            self.navigationItem.leftBarButtonItem?.enabled = false
-        }else{
-            self.navigationItem.leftBarButtonItem?.enabled = true
-        }
+//        let object = UIApplication.sharedApplication().delegate
+//        let appDelegate = object as! AppDelegate
+//        if (appDelegate.memes.count == 0) {
+////            self.dismissViewControllerAnimated(false, completion: nil)
+////            self.performSegueWithIdentifier("newMeme", sender: self)
+//            let editController = self.storyboard!.instantiateViewControllerWithIdentifier("MemeEditorViewController")! as! ViewController
+//            self.dismissViewControllerAnimated(true, completion: nil)
+//            self.navigationController!.presentViewController(editController, animated: true, completion: nil)
+//        }
     }
     override func viewDidAppear(animated: Bool) {
         self.collectionView?.reloadData()
@@ -46,9 +48,9 @@ class MemeCollectionViewController: UIViewController,UICollectionViewDataSource 
     }
     
     func anotherMeme(){
-        self.dismissViewControllerAnimated(true, completion: nil)
 //        let editorVC = self.storyboard!.instantiateViewControllerWithIdentifier("MemeEditorViewController")! as! ViewController
         //        editorVC.imagePickerView.image? = UIImage()
+        self.dismissViewControllerAnimated(true, completion: nil)
         self.performSegueWithIdentifier("newMeme", sender: self)
 //        self.navigationController!.pushViewController(editorVC, animated: true)
 //        var storyboard = UIStoryboard (name: "Main", bundle: nil)
@@ -61,10 +63,10 @@ class MemeCollectionViewController: UIViewController,UICollectionViewDataSource 
 //        self.navigationController?.presentViewController(editorVC, animated: true, completion:nil)
         
     }
-    func edit(){
-        self.editing = !self.editing
-        self.collectionView?.reloadData()
-    }
+//    func edit(){
+//        self.editing = !self.editing
+//        self.collectionView?.reloadData()
+//    }
 
     
     override func viewWillAppear(animated: Bool) {

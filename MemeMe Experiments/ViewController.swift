@@ -10,8 +10,6 @@ import UIKit
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
-//    var pickerController: UIImagePickerController?
-    
     @IBOutlet weak var bottomText: UITextField!
     @IBOutlet weak var topText: UITextField!
     @IBOutlet weak var imagePickerView: UIImageView!
@@ -22,16 +20,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     var cancelButton: UIBarButtonItem!
     var flexiblespace = UIBarButtonItem()
     
-
-//    let memeTextDelegate = MemeTextDelegate()
-    var topHasBeenEdited = false
-    var bottomHasBeenEdited = false
-    var keyboardHidden = true
     var meme: Meme!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         albumButton = UIBarButtonItem(title: "Album", style: .Done, target: self, action: "pickAnImageFromAlbum")
         cameraButton = UIBarButtonItem(barButtonSystemItem: .Camera, target: self, action: "pickAnImageFromCamera")
         saveButton = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "shareMeme")
@@ -50,27 +43,31 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         bottomText.defaultTextAttributes = memeTextAttributes
         topText.textAlignment = NSTextAlignment.Center
         bottomText.textAlignment = NSTextAlignment.Center
-        saveButton.enabled = false
-
-    }
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
+        
         self.navigationController?.setNavigationBarHidden(false, animated: false)
-
-//        self.navigationController?.navigationBarHidden(false, animated: false)
+        
         self.navigationController?.setToolbarHidden(false, animated: false)
         
         self.navigationItem.hidesBackButton = true
         
         self.navigationItem.leftBarButtonItem = saveButton
         self.navigationItem.rightBarButtonItem = cancelButton
-//        self.toolbarItems = [cameraButton, albumButton]
-//        self.setToolbarItems([cameraButton,albumButton], animated: true)
         self.toolbarItems = [flexiblespace,cameraButton,flexiblespace,albumButton,flexiblespace]
         
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
+        cancelButton.enabled = false
+        saveButton.enabled = false
         topText.text = "TOP"
         bottomText.text = "BOTTOM"
+
+    }
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationItem.hidesBackButton = true
+//
+//        cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
+//        topText.text = "TOP"
+//        bottomText.text = "BOTTOM"
         
     }
 
@@ -85,7 +82,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             imagePickerView.image = image
-            imagePickerView.contentMode = .ScaleAspectFill
+            imagePickerView.contentMode = .ScaleAspectFit
+            
             self.saveButton.enabled = true
         }
 
@@ -124,8 +122,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         //sanitize the image and save button so when returning for a new meme they are ready for business
         self.imagePickerView.image = UIImage()
         self.saveButton.enabled = false
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.topText.text = "TOP"
+        self.bottomText.text = "BOTTOM"
         
+        self.dismissViewControllerAnimated(true, completion: nil)
         self.navigationController?.presentViewController(sentMemeController, animated: true, completion:nil)
         
     }
@@ -141,7 +141,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let object = UIApplication.sharedApplication().delegate
         let appDelegate = object as! AppDelegate
         appDelegate.memes.append(meme)
-//        print(appDelegate.memes.count)
+        print("current count of memes: \(appDelegate.memes.count)\n")
         
         let activityController = UIActivityViewController(activityItems: [meme.memedImage], applicationActivities: nil)
         self.presentViewController(activityController, animated: true, completion: nil)
@@ -163,6 +163,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             
             //sanitize the image and save button so when returning for a new meme they are ready for business
             self.imagePickerView.image = UIImage()
+            self.topText.text = "TOP"
+            self.bottomText.text = "BOTTOM"
             self.saveButton.enabled = false
             self.dismissViewControllerAnimated(true, completion: nil)
           
@@ -173,8 +175,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
     }
     func generateMemedImage() -> UIImage {
-        ////http://stackoverflow.com/questions/2926914/navigation-bar-show-hide
-        // TODO: Hide toolbar and navbar
+        //Hide toolbar and navbar
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         self.navigationController?.setToolbarHidden(true, animated: false)
         // Render view to an image
@@ -185,7 +186,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        // TODO:  Show toolbar and navbar
+        //Show toolbar and navbar
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         self.navigationController?.setToolbarHidden(false, animated: false)
         
@@ -193,7 +194,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     //MARK:- KEYBOARD ITEMS
-    //After the enter is pressed at we dismiss the keyboard
+    //After enter is pressed at we dismiss the keyboard
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         if textField.isEqual(bottomText){

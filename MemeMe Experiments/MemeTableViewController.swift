@@ -12,26 +12,26 @@ class MemeTableViewController: UITableViewController, UITableViewDataSource, UIT
     var memes: [Meme]!
 
     var newButton = UIBarButtonItem()
-    var editButton = UIBarButtonItem()
+//    var editButton = UIBarButtonItem()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
 //        plusButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "anotherMeme")
         newButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "anotherMeme")
-        editButton = UIBarButtonItem(title: "Edit", style: .Done, target: self, action: "edit")
+//        editButton = UIBarButtonItem(title: "Edit", style: .Done, target: self, action: "edit")
         
         self.navigationItem.hidesBackButton = true
         self.navigationItem.rightBarButtonItem = newButton
-        self.navigationItem.leftBarButtonItem = editButton
+//        self.navigationItem.leftBarButtonItem = editButton
         
-        let object = UIApplication.sharedApplication().delegate
-        let appDelegate = object as! AppDelegate
-        if (appDelegate.memes.count == 0) {
-            self.navigationItem.leftBarButtonItem?.enabled = false
-        }else{
-            self.navigationItem.leftBarButtonItem?.enabled = true
-        }
+//        let object = UIApplication.sharedApplication().delegate
+//        let appDelegate = object as! AppDelegate
+//        if (appDelegate.memes.count == 0) {
+//            self.navigationItem.leftBarButtonItem?.enabled = false
+//        }else{
+//            self.navigationItem.leftBarButtonItem?.enabled = true
+//        }
 
     }
     func anotherMeme(){
@@ -42,9 +42,9 @@ class MemeTableViewController: UITableViewController, UITableViewDataSource, UIT
 //        self.navigationController!.pushViewController(editorVC, animated: true)
         
     }
-    func edit(){
-        self.editing = !self.editing
-    }
+//    func edit(){
+//        self.editing = !self.editing
+//    }
 
     
     override func viewWillAppear(animated:Bool) {
@@ -73,12 +73,7 @@ class MemeTableViewController: UITableViewController, UITableViewDataSource, UIT
         // Set the name and image
         cell.textLabel?.text = meme.topText+" - "+meme.bottomText
         cell.imageView?.image = meme.memedImage //UIImage(named: meme.image)
-        
-        // If the cell has a detail label, we will put the evil scheme in.
-//        if let detailTextLabel = cell.detailTextLabel {
-//            detailTextLabel.text = "Scheme: \(villain.evilScheme)"
-//        }
-        
+                
         return cell
     }
     
