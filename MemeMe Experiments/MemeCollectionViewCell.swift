@@ -9,6 +9,7 @@
 import UIKit
 
 class MemeCollectionViewCell: UICollectionViewCell {
- @IBOutlet weak var imageView: UIImageView!
+    //reference to the imageView item contained in the cell
+    @IBOutlet weak var imageView: UIImageView!
     
 }

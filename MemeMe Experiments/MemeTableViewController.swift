@@ -10,59 +10,34 @@ import UIKit
 
 class MemeTableViewController: UITableViewController, UITableViewDataSource, UITableViewDelegate {
     var memes: [Meme]!
-
     var newButton = UIBarButtonItem()
-//    var editButton = UIBarButtonItem()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        plusButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "anotherMeme")
         newButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "anotherMeme")
-//        editButton = UIBarButtonItem(title: "Edit", style: .Done, target: self, action: "edit")
         
         self.navigationItem.hidesBackButton = true
         self.navigationItem.rightBarButtonItem = newButton
-//        self.navigationItem.leftBarButtonItem = editButton
-        
-//        let object = UIApplication.sharedApplication().delegate
-//        let appDelegate = object as! AppDelegate
-//        if (appDelegate.memes.count == 0) {
-//            self.navigationItem.leftBarButtonItem?.enabled = false
-//        }else{
-//            self.navigationItem.leftBarButtonItem?.enabled = true
-//        }
 
     }
-    func anotherMeme(){
-//        let editorVC = self.storyboard!.instantiateViewControllerWithIdentifier("MemeEditorViewController")! as! ViewController
-//        editorVC.imagePickerView.image? = UIImage()
-        self.dismissViewControllerAnimated(true, completion: nil)
-        self.performSegueWithIdentifier("newMeme", sender: self)
-//        self.navigationController!.pushViewController(editorVC, animated: true)
-        
-    }
-//    func edit(){
-//        self.editing = !self.editing
-//    }
 
     
     override func viewWillAppear(animated:Bool) {
         super.viewWillAppear(true)
         
-//        let object = UIApplication.sharedApplication().delegate
-//        let appDelegate = object as! AppDelegate
-//        memes = appDelegate.memes
-        
+        //populate local memes var with the memes array
         let applicationDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate)
         memes = applicationDelegate.memes
     }
     override func viewDidAppear(animated: Bool) {
+        //need to make sure to update the table data after deletion of meme
         self.tableView?.reloadData()
     }
     
     
-    // MARK: Table View Data Source
+    // MARK: TableView count dequeue selectRow
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return memes.count
@@ -75,19 +50,31 @@ class MemeTableViewController: UITableViewController, UITableViewDataSource, UIT
         
         // Set the name and image
         cell.textLabel?.text = meme.topText+" - "+meme.bottomText
-        cell.imageView?.image = meme.memedImage //UIImage(named: meme.image)
+        cell.imageView?.image = meme.memedImage
                 
         return cell
+        
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//
         let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("MemeDetailViewController")! as! MemeDetailViewController
         detailController.meme   = self.memes[indexPath.row]
         detailController.currentIndex = indexPath.row
-
+        detailController.hidesBottomBarWhenPushed = true
+        
+        //navigate to detail view of meme
         self.navigationController!.pushViewController(detailController, animated: true)
+        
     }
-
+    
+    
+    // MARK: move to editor for new meme
+    
+    func anotherMeme(){
+        //navigate to the meme editor to create a new meme
+        self.dismissViewControllerAnimated(true, completion: nil)
+        self.performSegueWithIdentifier("newMeme", sender: self)
+        
+    }
 
 }

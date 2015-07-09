@@ -10,9 +10,9 @@ import UIKit
 
 class MemeCollectionViewController: UIViewController,UICollectionViewDataSource {
 
-    var memes: [Meme]!
-    
     @IBOutlet weak var collectionView: UICollectionView!
+
+    var memes: [Meme]!
     var newButton = UIBarButtonItem()
     
     
@@ -24,6 +24,7 @@ class MemeCollectionViewController: UIViewController,UICollectionViewDataSource 
         self.navigationItem.hidesBackButton = true
         self.navigationItem.rightBarButtonItem = newButton
         
+        //Check if any memes currently exist. If none are present, jump to the editor
         let object = UIApplication.sharedApplication().delegate
         let appDelegate = object as! AppDelegate
         if (appDelegate.memes.count == 0) {
@@ -35,27 +36,24 @@ class MemeCollectionViewController: UIViewController,UICollectionViewDataSource 
     }
     
     
-    override func viewDidAppear(animated: Bool) {
-        self.collectionView?.reloadData()
-
-    }
-
-    
-    func anotherMeme(){
-        self.dismissViewControllerAnimated(true, completion: nil)
-        self.performSegueWithIdentifier("newMeme", sender: self)
-        
-    }
-
-    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
+        //populate local memes var with the memes array
         let applicationDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate)
         memes = applicationDelegate.memes
         
     }
 
+    
+    override func viewDidAppear(animated: Bool) {
+        //need to make sure to update the table data after deletion of meme
+        self.collectionView?.reloadData()
+
+    }
+
+    
+    //MARK: CollectionView count dequeue selectItem
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return memes.count
@@ -87,4 +85,14 @@ class MemeCollectionViewController: UIViewController,UICollectionViewDataSource 
         
     }
     
+    
+    // MARK: move to editor for new meme
+    
+    func anotherMeme(){
+        //navigate to the meme editor to create a new meme
+        self.dismissViewControllerAnimated(true, completion: nil)
+        self.performSegueWithIdentifier("newMeme", sender: self)
+        
+    }
+
 }
