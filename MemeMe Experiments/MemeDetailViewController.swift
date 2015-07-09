@@ -23,6 +23,7 @@ class MemeDetailViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         self.memeImage.image = meme.memedImage
+        self.memeImage.contentMode = .ScaleAspectFit
         deleteButton = UIBarButtonItem(title: "Delete", style: .Done, target: self, action: "delete")
         self.navigationItem.rightBarButtonItem = deleteButton
 //        editButton = UIBarButtonItem(title: "Edit", style: .Done, target: self, action: "edit")

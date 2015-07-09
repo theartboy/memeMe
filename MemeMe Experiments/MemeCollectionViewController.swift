@@ -27,15 +27,16 @@ class MemeCollectionViewController: UIViewController,UICollectionViewDataSource 
         self.navigationItem.rightBarButtonItem = newButton
 //        self.navigationItem.leftBarButtonItem = editButton
         
-//        let object = UIApplication.sharedApplication().delegate
-//        let appDelegate = object as! AppDelegate
-//        if (appDelegate.memes.count == 0) {
-////            self.dismissViewControllerAnimated(false, completion: nil)
-////            self.performSegueWithIdentifier("newMeme", sender: self)
-//            let editController = self.storyboard!.instantiateViewControllerWithIdentifier("MemeEditorViewController")! as! ViewController
-//            self.dismissViewControllerAnimated(true, completion: nil)
-//            self.navigationController!.presentViewController(editController, animated: true, completion: nil)
-//        }
+        let object = UIApplication.sharedApplication().delegate
+        let appDelegate = object as! AppDelegate
+        if (appDelegate.memes.count == 0) {
+//            self.dismissViewControllerAnimated(false, completion: nil)
+//            self.performSegueWithIdentifier("newMeme", sender: self)
+            let editController = self.storyboard!.instantiateViewControllerWithIdentifier("MemeEditorViewController")! as! ViewController
+            self.dismissViewControllerAnimated(false, completion: nil)
+//            self.navigationController!.presentViewController(editController, animated: false, completion: nil)
+            self.navigationController?.pushViewController(editController, animated: false)
+        }
     }
     override func viewDidAppear(animated: Bool) {
         self.collectionView?.reloadData()
@@ -88,6 +89,7 @@ class MemeCollectionViewController: UIViewController,UICollectionViewDataSource 
         
         // Set the name and image
         cell.imageView?.image = meme.memedImage
+        cell.imageView?.contentMode = .ScaleAspectFit
         
         
         return cell

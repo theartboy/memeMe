@@ -59,11 +59,22 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         saveButton.enabled = false
         topText.text = "TOP"
         bottomText.text = "BOTTOM"
-
+        self.tabBarController?.tabBar.hidden = true
     }
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationItem.hidesBackButton = true
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+//
+        self.navigationController?.setToolbarHidden(false, animated: false)
+//        self.tabBarController?.hidesBottomBarWhenPushed
+        let object = UIApplication.sharedApplication().delegate
+        let appDelegate = object as! AppDelegate
+        if (appDelegate.memes.count == 0) {
+            cancelButton.enabled = false
+        }else{
+            cancelButton.enabled = true
+        }
 //
 //        cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
 //        topText.text = "TOP"
@@ -82,7 +93,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             imagePickerView.image = image
-            imagePickerView.contentMode = .ScaleAspectFit
+            imagePickerView.contentMode = .ScaleAspectFill
             
             self.saveButton.enabled = true
         }
@@ -147,16 +158,16 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         self.presentViewController(activityController, animated: true, completion: nil)
         
         activityController.completionWithItemsHandler = {(activityType, completed, items, error) in
-            if !completed {
-                print("\ncancelled share")
-                return
-            }
-            if activityType == UIActivityTypeSaveToCameraRoll {
-                print("\nSave to roll")
-            }            
-            if activityType == UIActivityTypeMail {
-                print("\nmail")
-            }
+//            if !completed {
+//                print("\ncancelled share")
+//                return
+//            }
+//            if activityType == UIActivityTypeSaveToCameraRoll {
+//                print("\nSave to roll")
+//            }            
+//            if activityType == UIActivityTypeMail {
+//                print("\nmail")
+//            }
 
             var storyboard = UIStoryboard (name: "Main", bundle: nil)
             var sentMemeController = storyboard.instantiateViewControllerWithIdentifier("TabBarController")as! UITabBarController
