@@ -21,16 +21,16 @@ class MemeCollectionViewController: UIViewController,UICollectionViewDataSource 
 
         newButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "anotherMeme")
         
-        self.navigationItem.hidesBackButton = true
-        self.navigationItem.rightBarButtonItem = newButton
+        navigationItem.hidesBackButton = true
+        navigationItem.rightBarButtonItem = newButton
         
         //Check if any memes currently exist. If none are present, jump to the editor
         let object = UIApplication.sharedApplication().delegate
         let appDelegate = object as! AppDelegate
         if (appDelegate.memes.count == 0) {
-            let editController = self.storyboard!.instantiateViewControllerWithIdentifier("MemeEditorViewController")! as! ViewController
-            self.dismissViewControllerAnimated(false, completion: nil)
-            self.navigationController?.pushViewController(editController, animated: false)
+            let editController = storyboard!.instantiateViewControllerWithIdentifier("MemeEditorViewController")! as! ViewController
+            dismissViewControllerAnimated(false, completion: nil)
+            navigationController?.pushViewController(editController, animated: false)
         }
         
     }
@@ -48,7 +48,7 @@ class MemeCollectionViewController: UIViewController,UICollectionViewDataSource 
     
     override func viewDidAppear(animated: Bool) {
         //need to make sure to update the table data after deletion of meme
-        self.collectionView?.reloadData()
+        collectionView?.reloadData()
 
     }
 
@@ -63,7 +63,7 @@ class MemeCollectionViewController: UIViewController,UICollectionViewDataSource 
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("MemeCollectionViewCell", forIndexPath: indexPath) as! MemeCollectionViewCell
-        let meme = self.memes[indexPath.row]
+        let meme = memes[indexPath.row]
         
         // Set the name and image
         cell.imageView?.image = meme.memedImage
@@ -76,15 +76,15 @@ class MemeCollectionViewController: UIViewController,UICollectionViewDataSource 
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath:NSIndexPath){
         
-        let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("MemeDetailViewController")! as! MemeDetailViewController
-        detailController.meme   = self.memes[indexPath.row]
+        let detailController = storyboard!.instantiateViewControllerWithIdentifier("MemeDetailViewController")! as! MemeDetailViewController
+        detailController.meme   = memes[indexPath.row]
         //sends the index of the selected meme to the detail view
         detailController.currentIndex = indexPath.row
         //hides the tab bar in the detail view
         detailController.hidesBottomBarWhenPushed = true
         
         
-        self.navigationController!.pushViewController(detailController, animated: true)
+        navigationController!.pushViewController(detailController, animated: true)
         
     }
     
@@ -93,8 +93,8 @@ class MemeCollectionViewController: UIViewController,UICollectionViewDataSource 
     
     func anotherMeme(){
         //navigate to the meme editor to create a new meme
-        self.dismissViewControllerAnimated(true, completion: nil)
-        self.performSegueWithIdentifier("newMeme", sender: self)
+        dismissViewControllerAnimated(true, completion: nil)
+        performSegueWithIdentifier("newMeme", sender: self)
         
     }
 
