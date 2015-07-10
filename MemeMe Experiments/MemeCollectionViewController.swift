@@ -23,16 +23,7 @@ class MemeCollectionViewController: UIViewController,UICollectionViewDataSource 
         
         navigationItem.hidesBackButton = true
         navigationItem.rightBarButtonItem = newButton
-        
-        //Check if any memes currently exist. If none are present, jump to the editor
-        let object = UIApplication.sharedApplication().delegate
-        let appDelegate = object as! AppDelegate
-        if (appDelegate.memes.count == 0) {
-            let editController = storyboard!.instantiateViewControllerWithIdentifier("MemeEditorViewController")! as! ViewController
-            dismissViewControllerAnimated(false, completion: nil)
-            navigationController?.pushViewController(editController, animated: false)
-        }
-        
+                
     }
     
     
