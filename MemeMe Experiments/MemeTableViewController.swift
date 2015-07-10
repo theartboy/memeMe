@@ -21,6 +21,7 @@ class MemeTableViewController: UITableViewController, UITableViewDataSource, UIT
         navigationItem.hidesBackButton = true
         navigationItem.rightBarButtonItem = newButton
 
+//        tabBarController?.tabBar.hidden = false
     }
 
     
@@ -74,9 +75,11 @@ class MemeTableViewController: UITableViewController, UITableViewDataSource, UIT
     
     func anotherMeme(){
         //navigate to the meme editor to create a new meme
+        let editController = storyboard!.instantiateViewControllerWithIdentifier("MemeEditorViewController")! as! ViewController
+        editController.hidesBottomBarWhenPushed = true
         dismissViewControllerAnimated(true, completion: nil)
-        performSegueWithIdentifier("newMeme", sender: self)
-        
+        navigationController?.pushViewController(editController, animated: false)
+
     }
 
 }
