@@ -18,8 +18,8 @@ class MemeTableViewController: UITableViewController, UITableViewDataSource, UIT
         
         newButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "anotherMeme")
         
-        self.navigationItem.hidesBackButton = true
-        self.navigationItem.rightBarButtonItem = newButton
+        navigationItem.hidesBackButton = true
+        navigationItem.rightBarButtonItem = newButton
 
     }
 
@@ -33,7 +33,7 @@ class MemeTableViewController: UITableViewController, UITableViewDataSource, UIT
     }
     override func viewDidAppear(animated: Bool) {
         //need to make sure to update the table data after deletion of meme
-        self.tableView?.reloadData()
+        tableView?.reloadData()
     }
     
     
@@ -46,7 +46,7 @@ class MemeTableViewController: UITableViewController, UITableViewDataSource, UIT
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("MemeCell") as! UITableViewCell
-        let meme = self.memes[indexPath.row]
+        let meme = memes[indexPath.row]
         
         // Set the name and image
         cell.textLabel?.text = meme.topText+" - "+meme.bottomText
@@ -57,7 +57,7 @@ class MemeTableViewController: UITableViewController, UITableViewDataSource, UIT
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("MemeDetailViewController")! as! MemeDetailViewController
+        let detailController = storyboard!.instantiateViewControllerWithIdentifier("MemeDetailViewController")! as! MemeDetailViewController
         detailController.meme   = self.memes[indexPath.row]
         //sends the index of the selected meme to the detail view
         detailController.currentIndex = indexPath.row
@@ -65,7 +65,7 @@ class MemeTableViewController: UITableViewController, UITableViewDataSource, UIT
         detailController.hidesBottomBarWhenPushed = true
         
         //navigate to detail view of meme
-        self.navigationController!.pushViewController(detailController, animated: true)
+        navigationController!.pushViewController(detailController, animated: true)
         
     }
     
@@ -74,8 +74,8 @@ class MemeTableViewController: UITableViewController, UITableViewDataSource, UIT
     
     func anotherMeme(){
         //navigate to the meme editor to create a new meme
-        self.dismissViewControllerAnimated(true, completion: nil)
-        self.performSegueWithIdentifier("newMeme", sender: self)
+        dismissViewControllerAnimated(true, completion: nil)
+        performSegueWithIdentifier("newMeme", sender: self)
         
     }
 
