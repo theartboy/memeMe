@@ -89,7 +89,7 @@ class MemeCollectionViewController: UIViewController,UICollectionViewDataSource 
         //hides the tab bar on the editor view controller
         editController.hidesBottomBarWhenPushed = true
         
-        dismissViewControllerAnimated(true, completion: nil)
+        dismissViewControllerAnimated(false, completion: nil)
         navigationController?.pushViewController(editController, animated: false)
         
     }

@@ -39,8 +39,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         //enable the camera button if a camera is detected or allowed
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
         
-        //start with cancel and save disabled because there is nothing to cancel or save yet
-        cancelButton.enabled = false
+        //keep cancel active to return to sent meme scene
+        cancelButton.enabled = true
+        //start with save disabled because there is nothing to save yet
         saveButton.enabled = false
         
         setBarVisible(true)
@@ -72,15 +73,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         super.viewWillAppear(animated)
         
         setBarVisible(true)
-        
-        //verify if any memes exist. If none, disable cancel button
-        let object = UIApplication.sharedApplication().delegate
-        let appDelegate = object as! AppDelegate
-        if (appDelegate.memes.count == 0) {
-            cancelButton.enabled = false
-        }else{
-            cancelButton.enabled = true
-        }
         
     }
     

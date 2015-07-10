@@ -76,9 +76,13 @@ class MemeTableViewController: UITableViewController, UITableViewDataSource, UIT
     func anotherMeme(){
         //navigate to the meme editor to create a new meme
         let editController = storyboard!.instantiateViewControllerWithIdentifier("MemeEditorViewController")! as! ViewController
+        
+        //hides the tab bar on the editor view controller
         editController.hidesBottomBarWhenPushed = true
+        
         dismissViewControllerAnimated(true, completion: nil)
         navigationController?.pushViewController(editController, animated: false)
+        
 
     }
 
