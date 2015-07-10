@@ -31,16 +31,11 @@ class MemeDetailViewController: UIViewController {
     }
     
     
-    override func viewWillAppear(animated: Bool) {
-//        self.navigationController?.hidesBottomBarWhenPushed = true
-    }
-
-
     func delete(){
         //delete the current meme
         let object = UIApplication.sharedApplication().delegate
         let appDelegate = object as! AppDelegate
-
+        //delete the current meme from the memes array
         appDelegate.memes.removeAtIndex(currentIndex)
         
         //go back to the sent memes scene

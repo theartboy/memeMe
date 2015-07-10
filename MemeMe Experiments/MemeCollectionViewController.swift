@@ -78,7 +78,10 @@ class MemeCollectionViewController: UIViewController,UICollectionViewDataSource 
         
         let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("MemeDetailViewController")! as! MemeDetailViewController
         detailController.meme   = self.memes[indexPath.row]
+        //sends the index of the selected meme to the detail view
         detailController.currentIndex = indexPath.row
+        //hides the tab bar in the detail view
+        detailController.hidesBottomBarWhenPushed = true
         
         
         self.navigationController!.pushViewController(detailController, animated: true)
