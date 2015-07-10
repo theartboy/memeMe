@@ -132,8 +132,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         imagePicker.delegate = self
         
         imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
+
+        imagePicker.modalPresentationStyle =  UIModalPresentationStyle.CurrentContext
         
-        presentViewController(imagePicker, animated: true, completion: nil)
+        presentViewController(imagePicker, animated: false, completion: nil)
         
     }
     
